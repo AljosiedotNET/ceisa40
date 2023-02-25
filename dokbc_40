@@ -1,0 +1,400 @@
+
+<div class="main-content">
+	<div class="main-content-inner">
+		<div class="page-content">
+			<div class="page-header">
+				<h1>
+					BC 4.0
+					<small><i class="ace-icon fa fa-angle-double-right"></i> New</small>
+				</h1>
+			</div>
+			<a href="<?php echo base_url('dokpabout/bc').$dokbc; ?>" class="btn btn-minier btn-yellow"><i class="ace-icon fa fa-undo"></i>Back <?php echo $dokbc; ?></a><!-- /.page-header -->
+			<!-- <a data-toggle="modal" href="<?php echo base_url('dokbc/load_po_40'); ?>" data-target="#modal_bc" class="btn btn-minier btn-purple"><i class="ace-icon glyphicon glyphicon-plus"></i>Load From PO</a> -->
+			<a data-toggle="modal" href="<?php echo base_url('dokbc/load_sj'); ?>" data-target="#modal_bc" class="btn btn-minier btn-purple"><i class="ace-icon glyphicon glyphicon-plus"></i>Get From Surat Jalan In</a>
+			<form class="form-horizontal" id="form-so" role="form" action="" method="POST">
+				<div class="row">
+					<div class=" col-sm-6 well well-sm">
+					    
+						<div class="form-group">
+									<label class="col-sm-3"><b> Nomor Aju </b></label>
+									<div class="col-sm-4">
+										<input type="text" id="NOMOR_AJU" name="NOMOR_AJU" class="form-control" value="<?php echo $no_aju;?>">
+									</div>
+									<div class="col-sm-3">
+										
+										<div class="input-group">
+											<input class="form-control date-picker"  id="TANGGAL_AJU" name="TANGGAL_AJU" type="text" data-date-format="yyyy-mm-dd" value="<?php echo date("Y-m-d");?>"  />
+											<span class="input-group-addon"><i class="fa fa-calendar bigger-110" ></i></span>
+										</div>
+									</div>
+								</div>
+						<div class="form-group">
+							<label class="col-sm-3"><b> Kantor Asal </b> </label>
+							<div class="col-sm-6">
+								<select class="chosen-select form-control" name="KODE_KANTOR" id="KODE_KANTOR" >
+									
+									<?php foreach($kantor_pabean as $kantor){
+										if($kantor['KODE_KANTOR'] == '150300'){
+											echo "<option value='$kantor[KODE_KANTOR]' selected>$kantor[URAIAN_KANTOR]</option>";
+										}else{
+											echo "<option value='$kantor[KODE_KANTOR]'>$kantor[URAIAN_KANTOR]</option>";
+										}
+									} ?>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3"><b> Tujuan Pengiriman </b></label>
+							<div class="col-sm-6">
+								<select class="chosen-select form-control" name="KODE_TUJUAN_PENGIRIMAN" id="KODE_TUJUAN_PENGIRIMAN" require>
+									<?php foreach($tujuan_pengiriman as $tujuan){
+									
+											echo "<option value='$tujuan[KODE_TUJUAN_PENGIRIMAN]' >$tujuan[URAIAN_TUJUAN_PENGIRIMAN]</option>";
+										
+									} ?>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-3 no-padding-right"><b> Jenis TPB </b> </label>
+							<div class="col-sm-6">
+								<select class="chosen-select form-control" name="KODE_JENIS_TPB" id="KODE_JENIS_TPB" require>
+									<option value="1" selected>KAWASAN BERIKAT</option>
+									<option value="2" >GUDANG BERIKAT</option>
+																				
+								</select>
+							</div>
+						</div>
+						<label><b> PENGUSAHA TPB / PKP </b> </label>
+						<div class="form-group">
+							<label class="col-sm-3">1. NPWP </label>
+							<div class="col-sm-3">
+								<select class="chosen-select form-control" name="KODE_ID_PENGUSAHA" id="KODE_ID_PENGUSAHA" require>
+									<option value="1" selected>NPWP 15 DIGIT</option>
+								</select>
+							</div>
+							<div class="col-sm-4">
+								<input type="text" id="ID_PENGUSAHA" name="ID_PENGUSAHA" class="form-control" value="<?php echo $perusahaan['no_id'];?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3">2. Nama	</label>
+							<div class="col-sm-6">
+								<input type="text" id="NAMA_PENGUSAHA" name="NAMA_PENGUSAHA" class="form-control" value="<?php echo $perusahaan['nama'];?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3">3.  Alamat</label>
+							<div class="col-sm-8">
+								<input type="text" id="ALAMAT_PENGUSAHA" name="ALAMAT_PENGUSAHA" class="form-control" value="<?php echo $perusahaan['alamat'];?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3">4. No. Izin	 </label>
+							<div class="col-sm-4">
+								<input type="text" id="NOMOR_IJIN_TPB" name="NOMOR_IJIN_TPB" class="form-control" value="<?php echo $perusahaan['no_skep'];?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3">5. NIB	 </label>
+							<div class="col-sm-4">
+								<input type="text" id="NOMOR_IZIN_BERUSAHA" name="NOMOR_IZIN_BERUSAHA" placeholder="NIB" class="form-control" value="<?php echo $perusahaan['nib'];?>">
+							</div>
+						</div>
+						
+						
+						<label><b> PENGIRIM BARANG </b></label>
+						<div class="form-group">
+							<label class="col-sm-3">5. NPWP </label>
+							<div class="col-sm-3">
+								<select class="chosen-select form-control" name="KODE_ID_PENGIRIM" id="KODE_ID_PENGIRIM" require>
+									<option value="1" selected>NPWP 15 DIGIT</option>
+								</select>
+							</div>
+							<div class="col-sm-4">
+								<input type="text" id="ID_PENGIRIM" name="ID_PENGIRIM" class="form-control" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3">6. Nama	</label>
+							<div class="col-sm-6">
+								<input type="text" id="NAMA_PENGIRIM" name="NAMA_PENGIRIM" class="form-control" value="">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-3">8. Alamat</label>
+							<div class="col-sm-8">
+								<input type="text" id="ALAMAT_PENGIRIM" name="ALAMAT_PENGIRIM" class="form-control" value="">
+							</div>
+						</div>
+						
+						<label><b> PEMILIK BARANG </b> </label>
+						<div class="form-group">
+							<label class="col-sm-3">1. NPWP </label>
+							<div class="col-sm-3">
+								<select class="chosen-select form-control" name="KODE_ID_PEMILIK" id="KODE_ID_PEMILIK" required>
+									<option value="1" selected>NPWP 15 DIGIT</option>
+								</select>
+							</div>
+							<div class="col-sm-4">
+								<input type="text" id="ID_PEMILIK" name="ID_PEMILIK" class="form-control" value="<?php echo $perusahaan['no_id'];?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3">2. Nama	</label>
+							<div class="col-sm-6">
+								<input type="text" id="NAMA_PEMILIK" name="NAMA_PEMILIK" class="form-control" value="<?php echo $perusahaan['nama'];?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3">3.  Alamat</label>
+							<div class="col-sm-8">
+								<input type="text" id="ALAMAT_PEMILIK" name="ALAMAT_PEMILIK" class="form-control" value="<?php echo $perusahaan['alamat'];?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3">4. No. Izin	 </label>
+							<div class="col-sm-4">
+								<input type="text" id="NOMOR_IJIN_PEMILIK" name="NOMOR_IJIN_PEMILIK" class="form-control" value="<?php echo $perusahaan['no_skep'];?>">
+							</div>
+						</div>
+					</div>
+                             
+					
+				
+
+					<div class=" col-sm-6 ">
+						<div class="row">
+							<div class="col-sm-12 well well-sm" >
+								<label><b> PENGANGKUTAN </b></label>
+								<div class="form-group">
+									<label class="col-sm-3">9. Jenis Sarana Pengangkut</label>
+									<div class="col-sm-6">
+										<input type="text" id="KODE_CARA_ANGKUT" name="KODE_CARA_ANGKUT" class="form-control" value="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3">10. No. Sarana Pengangkut</label>
+									<div class="col-sm-6">
+										<input type="text" id="NOMOR_POLISI" name="NOMOR_POLISI" class="form-control" value="">
+									</div>
+								</div>
+							
+						
+					
+						<label><b> HARGA </b> </label>
+						<div class="form-group">
+							<label class="col-sm-3">1. Harga Penyerahan </label>
+							<div class="col-sm-3">
+								<input type="text" id="HARGA_PENYERAHAN_HEAD" name="HARGA_PENYERAHAN_HEAD" required class="form-control" value="">
+								
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3">2. Nilai Pengganti / Nilai Jasa	</label>
+							<div class="col-sm-3">
+								<input type="text" id="NILAI_PENGGANTI" name="NILAI_PENGGANTI" class="form-control" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3">3.  Nilai Uang Muka</label>
+							<div class="col-sm-3">
+								<input type="text" id="UANG_MUKA" name="UANG_MUKA" class="form-control" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3">4. Diskon </label>
+							<div class="col-sm-3">
+								<input type="text" id="DISKON" name="DISKON" class="form-control" value="">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-10"><b> BERAT </b></label>	
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3"> 11. Bruto (Kg) </label>
+							<div class="col-sm-3">
+								<input type="text" id="BRUTO" name="BRUTO" required class="form-control" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3"> 12. Netto (Kg) </label>
+							<div class="col-sm-3">
+								<input type="text" id="NETTO_HEAD" name="NETTO_HEAD" required class="form-control" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3"> 13. Volume (M3) </label>
+							<div class="col-sm-3">
+								<input type="text" id="VOLUME_HEAD" name="VOLUME_HEAD" required class="form-control" value="">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-3"> 14. Jumlah Barang </label>
+							<div class="col-sm-3">
+								<input type="text" id="JUMLAH_BARANG" name="JUMLAH_BARANG" required class="form-control" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3"> 15. Jumlah Kemasan </label>
+							<div class="col-sm-3">
+								<input type="text" id="JUMLAH_KEMASAN" name="JUMLAH_KEMASAN" required class="form-control" value="">
+							</div>
+						</div>
+						<div class="tabbable">
+					<ul class="nav nav-tabs" id="myTab">
+						<li class="active">
+						</li>
+					</ul>
+					
+					<div class="tab-content">
+						<div id="kemasan" class="tab-pane fade active in">
+							<a data-toggle="modal" href="<?php echo base_url('dokbc/add_kemasan'); ?>" data-target="#modal_bc" class="btn btn-minier btn-purple"><i class="ace-icon glyphicon glyphicon-plus"></i>KEMASAN</a>
+					        <table id="table-kemasan" class="table table-striped table-bordered table-hover">
+								<thead>
+								
+									 <tr>
+										<th style="width: 15%"> Kode Jenis</th>
+										<th style="width: 25%"> Jenis </th>
+										<th style="width: 7%"> Jumlah</th>
+										<th style="width: 5%"> Aksi</th>
+									</tr>
+								</thead>
+								<tbody>	
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+						</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="tabbable">
+					<ul class="nav nav-tabs" id="myTab">
+						<li class="active">
+							<a data-toggle="tab" href="#barang" aria-expanded="false">
+								<i class="green ace-icon fa fa-list bigger-120"></i>
+								Barang
+							</a>
+						</li>
+						<li class="">
+							<a data-toggle="tab" href="#dokumen" aria-expanded="false">
+								<i class="green ace-icon fa fa-file bigger-120"></i>
+								Dokumen
+							</a>
+						</li>
+					</ul>
+
+					<div class="tab-content">
+						<div id="barang" class="tab-pane fade active in">
+						<!--	<a data-toggle="modal" href="<?php echo base_url('dokbc/add_barang_form'); ?>" data-target="#modal_bc" class="btn btn-minier btn-purple"><i class="ace-icon glyphicon glyphicon-plus"></i>Add Barang</a>
+					-->      <table id="table-barang" class="table table-striped table-bordered table-hover">
+								<thead>
+									<tr>
+										<th style="width: 3%"> No.</th>
+										<th style="width: 8%"> Kode HS</th>
+										<th style="width: 10%"> Kode Barang</th>
+										<th style="width: 15%"> Nama Barang, Spf Lainnya</th>
+										<th style="width: 7%"> Jumlah</th>
+										<th style="width: 10%"> Netto</th>
+										<th style="width: 10%"> Harga Satuan</th>
+										<th style="width: 10%"> Harga Penyerahan</th>
+										<th style="width: 5%"> PPN (%)</th>
+										<th style="width: 12%"> Fasilitas</th>
+										<th style="width: 10%"> Tarif (%)</th>
+										<th style="width: 5%"> Aksi</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+						</div>
+
+						<div id="dokumen" class="tab-pane fade ">
+							<a data-toggle="modal" href="<?php echo base_url('dokbc/add_dokumen_27'); ?>" data-target="#modal_bc" class="btn btn-minier btn-purple"><i class="ace-icon glyphicon glyphicon-plus"></i>DOKUMEN</a>
+							<table id="table-dokumen" class="table table-striped table-bordered table-hover">
+								<thead>
+								
+									 <tr>
+										<th style="width: 15%"> Jenis Dokumen</th>
+										<th style="width: 25%"> Nomor Dokumen</th>
+										<th style="width: 7%"> Tanggal</th>
+										<th style="width: 5%"> Aksi</th>
+									</tr>
+								</thead>
+								<tbody>
+								
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+				</div>
+				<div><button type=submit class='btn btn-primary'>Simpan</button></div>
+			</form>
+
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="modal_bc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header"></div>
+			<div class="modal-body"></div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
+<script>
+	jQuery(function($) {
+		
+		$('body').on('hidden.bs.modal', '.modal', function () {
+			$(this).removeData('bs.modal');
+			
+		});
+		$('.chosen-select', this).chosen('destroy').chosen();
+		   $("table").on("click", ".del-row", function(){
+        $(this).closest('tr').remove();
+         });
+		 
+		 $('.date-picker').datepicker({
+            dateFormat: 'yy-mm-dd',
+            defaultDate: new Date(),
+            autoclose: true,
+            todayHighlight: true,
+        })
+        .next().on(ace.click_event, function() {
+            $(this).prev().focus();
+        });
+
+		$(document).on("submit", "#form-so", function(e) {
+			e.preventDefault();
+			$.ajax({
+				url: "<?php echo base_url('dokbc/insert_bc40'); ?>",
+				method: "POST",
+				data: new FormData(this),
+				contentType: false,
+				processData: false,
+				success: function(data) {
+
+					if (data.trim() == "sukses") {
+						swal("Sukses!", "Data telah tersimpan!", "success").then((value) => {
+							window.location = "<?php echo base_url('dokpabin/bc40'); ?>";
+						});
+					} else {
+						swal("Error!", data, "error").then((value) => {
+							window.location = "<?php echo base_url('dokpabin/bc40'); ?>";
+						});
+					}
+				}
+			});
+		});
+	});
+</script>
